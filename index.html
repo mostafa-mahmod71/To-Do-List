@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="assets/fontawesome-free-7.1.0-web/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar custom-navbar">
+      <div class="container d-flex justify-content-between align-items-center">
+        <!-- Left Side: Icon and Brand Name -->
+        <div class="navbar-brand">
+          <i class="fa-solid fa-table-columns"></i>
+          <!-- Kanban Icon -->
+          <span class="text-white">Kanban</span>
+        </div>
+
+        <!-- Right Side: Plus Button -->
+        <div class="pe-2 btn-add">
+          <button
+            class="btn btn-add"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#createTaskModal"
+          >
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="mt-5">
+      <div class="container">
+        <div class="row g-2 justify-content-between">
+          <div class="col-md-4">
+            <div class="inner rounded-3 border bg-white">
+              <header class="p-2 d-flex align-items-center">
+                <div class="p-2 rounded">
+                  <i class="h3 fa-solid fa-clipboard-list"></i>
+                </div>
+                <div>
+                  <h6 class="fa-bold mb-0">To Do</h6>
+                  <span class="fa-sm lead"
+                    ><span id="todoCounter"> 0</span> tasks</span
+                  >
+                </div>
+              </header>
+
+              <div id="toDo" class="content mt-4 px-2 text-center">
+                <!-- content  -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inner rounded-3 border bg-white">
+              <header class="p-2 d-flex align-items-center">
+                <div class="p-2 rounded">
+                  <i class="h3 text-warning fa-solid fa-spinner"></i>
+                </div>
+                <div>
+                  <h6 class="fa-bold mb-0">In Progress</h6>
+                  <span class="fa-sm lead">
+                    <span id="progressCounter"> 0</span> tasks</span
+                  >
+                </div>
+              </header>
+
+              <div id="progress" class="content mt-4 px-2 text-center">
+                <!-- content  -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inner rounded-3 border bg-white">
+              <header class="p-2 d-flex align-items-center">
+                <div class="p-2 rounded">
+                  <i class="text-success fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                  <h6 class="fa-bold mb-0">Completed</h6>
+                  <span class="fa-sm lead">
+                    <span id="completedCounter"> 0</span> tasks</span
+                  >
+                </div>
+              </header>
+
+              <div id="completed" class="content mt-4 px-2 text-center">
+                <!-- content  -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal Create New Task -->
+    <section
+      class="modal fade"
+      id="createTaskModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+          <!-- Header -->
+          <div class="modal-header border-bottom-0 pb-0">
+            <h5 class="modal-title fw-bold" style="color: #1e293b">
+              Create New Task
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- alert  -->
+            <div id="alertV"></div>
+            <form>
+              <!-- Task Title -->
+              <div class="mb-3">
+                <label class="form-label small fw-semibold text-muted">
+                  <i class="fa-solid fa-h small me-1"></i> Task Title
+                  <span class="text-danger">*</span>
+                </label>
+                <input
+                  required
+                  id="titleInp"
+                  type="text"
+                  class="form-control custom-input py-2"
+                  placeholder="What needs to be done?"
+                />
+              </div>
+
+              <!-- Priority & Due Date -->
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">
+                    <i class="fa-solid fa-flag small me-1"></i> Priority
+                  </label>
+                  <select id="levelInp" class="form-select custom-input">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">
+                    <i class="fa-solid fa-calendar-days small me-1"></i> Due
+                    Date
+                  </label>
+                  <input
+                    id="dateInp"
+                    type="date"
+                    class="form-control custom-input"
+                  />
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="mb-1">
+                <label class="form-label small fw-semibold text-muted">
+                  <i class="fa-solid fa-align-left small me-1"></i> Description
+                </label>
+                <textarea
+                  id="descInp"
+                  class="form-control custom-input"
+                  rows="4"
+                  placeholder="Add more details about this task..."
+                ></textarea>
+                <div class="text-end">
+                  <small class="text-muted small" style="font-size: 0.7rem"
+                    >0/500</small
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="modal-footer border-top-0 pt-0">
+            <button
+              id="btnClose"
+              type="button"
+              class="btn btn-light flex-grow-1 py-2 fw-semibold"
+              style="background-color: #f1f5f9"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              id="btnAdd"
+              type="button"
+              class="btn btn-primary flex-grow-1 py-2 fw-semibold"
+            >
+              <i class="fa-solid fa-plus me-1"></i> Add Task
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
